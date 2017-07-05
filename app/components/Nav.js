@@ -1,24 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router';
-// import { connect } from 'react-redux';
-// import { logout } from '../actions/authActions';
+import React from 'react'
+import { Link } from 'react-router'
+import AuthStore from '../stores/AuthStore'
+import setAuthToken from '.././helpers/setAuthToken'
+import { browserHistory } from 'react-router'
 
 class Nav extends React.Component {
-  // logout(e) {
-  //   e.preventDefault();
-  //   this.props.logout();
-  // }
+
   constructor() {
     super()
+    this.state = {
+      currentUser: {}
+    }
   }
 
+  componentWillMount(){
+      AuthStore.on('change', () =>{
+          this.setState({ currentUser : AuthStore.getCurrentUser() })
+      })
+  }
+
+  logout(e){
+    e.preventDefault()
+    localStorage.removeItem('jwtToken')
+    setAuthToken(false)
+    AuthStore.setCurrentUser(null)
+    browserHistory.push('/')
+  }
   render() {
-    const { isAuthenticated } = false //this.props.auth;
+    const { isAuthenticated } = this.state.currentUser
 
     const userLinks = (
       <ul className="nav navbar-nav navbar-right">
-        {/*<li><a href="#" onClick={this.logout.bind(this)}>Logout</a></li>*/}
-        <li><a href="#">Logout</a></li>
+        <li><a href="#" onClick = {this.logout.bind(this)} >Logout</a></li>
       </ul>
     );
 
@@ -45,15 +58,3 @@ class Nav extends React.Component {
 }
 
 export default Nav
-// NavigationBar.propTypes = {
-//   auth: React.PropTypes.object.isRequired,
-//   logout: React.PropTypes.func.isRequired
-// }
-
-// function mapStateToProps(state) {
-//   return {
-//     auth: state.auth
-//   };
-// }
-
-// export default connect(mapStateToProps, { logout })(NavigationBar);

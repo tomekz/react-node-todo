@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from './Nav'
-import Todos from './Todos'
+import AuthStore from '.././stores/AuthStore'
+
 
 class App extends React.Component {
 
@@ -8,10 +9,16 @@ class App extends React.Component {
     super()
   }
 
+  componentDidMount(){
+    if(localStorage.jwtToken){
+      AuthStore.setCurrentUser(localStorage.jwtToken)
+    }
+  }
+
   render() {
     return (
       <div className="container">
-        <Nav/>
+        <Nav isAuthenticated = { this.isAuthenticated} user={ this.user }/>
         {this.props.children}
       </div>
     )

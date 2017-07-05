@@ -27,5 +27,10 @@ export default {
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-  ]
+  ],
+  node: {
+    net: 'empty',
+    dns: 'empty'
+  }
+
 }
