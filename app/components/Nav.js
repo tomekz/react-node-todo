@@ -31,6 +31,7 @@ class Nav extends React.Component {
 
     const userLinks = (
       <ul className="nav navbar-nav navbar-right">
+        <li><Link to="/todos">Todos</Link></li>
         <li><a href="#" onClick = {this.logout.bind(this)} >Logout</a></li>
       </ul>
     );
@@ -46,7 +47,7 @@ class Nav extends React.Component {
       <nav className="navbar navbar-default">
         <div className="container-fluid">
           <div className="navbar-header">
-            <Link to="/" className="navbar-brand">TODOS</Link>
+            <Link to="/" className="navbar-brand">Home</Link>
           </div>
           <div className="collapse navbar-collapse">
             { isAuthenticated ? userLinks : guestLinks }

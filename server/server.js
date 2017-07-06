@@ -30,3 +30,5 @@ dbConnect()
 app.listen(config.port, () =>{
   console.log(`App listening on port ${config.port}`)
 })
+
+export default app

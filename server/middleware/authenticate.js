@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
-import config from '../config/config';
-import User from '../models/user';
+import jwt from 'jsonwebtoken'
+import config from '../config/config'
+import User from '../models/user'
 
 export default (req, res, next) => {
-  const authorizationHeader = req.headers['authorization'];
+  const authorizationHeader = req.headers['authorization']
   let token;
 
   if (authorizationHeader) {
@@ -21,7 +21,7 @@ export default (req, res, next) => {
             next()
           }
           else {
-            res.status(404).json({ error: 'No such user' })
+           res.status(404).json({ error: 'No such user' })
           }
         })
       }
