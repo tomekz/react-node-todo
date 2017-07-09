@@ -1,7 +1,6 @@
 import React from 'react'
 import FormTextField from '../common/FormTextField'
 import { browserHistory } from 'react-router'
-import axios from 'axios'
 
 export class RegisterForm extends React.Component {
   constructor(props){
@@ -11,7 +10,6 @@ export class RegisterForm extends React.Component {
       password: '',
       passwordConfirmation: '',
       errors: {},
-      success: '',
       isLoading: false
     }
     this.onSubmit = this.onSubmit.bind(this)
@@ -24,7 +22,6 @@ export class RegisterForm extends React.Component {
     <form onSubmit={this.onSubmit.bind(this)}>
 
       <h2>Register</h2>
-      { success && <div className="alert alert-success">{success}</div> }
 
       <FormTextField
         field="email"
@@ -68,13 +65,25 @@ export class RegisterForm extends React.Component {
   onSubmit(e){
     this.setState({ errors: {} , isLoading: true})
     e.preventDefault()
-    axios.post('/api/users', {user: this.state}).then(
+    this.props.registerRequest(this.state).then(
       (data) => {
-         this.setState({success: data.data.success, isLoading: false})
+        this.props.addMessage({
+          type: 'success',
+          text: 'Registered successfully, please login'
+        })
+        this.setState({isLoading: false})
       },
-      (error) =>   this.setState({errors: error.response.data, isLoading: false})
+      (error) => {
+        this.setState({errors: error.response.data, isLoading: false})
+      }
     )
   }
+}
+
+
+RegisterForm.propTypes = {
+  registerRequest : React.PropTypes.func.isRequired,
+  addMessage : React.PropTypes.func.isRequired
 }
 
 

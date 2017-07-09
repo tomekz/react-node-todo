@@ -1,7 +1,7 @@
 import React from 'react'
 import Nav from './Nav'
 import AuthStore from '.././stores/AuthStore'
-
+import MessagesList from './messages/MessagesList'
 
 class App extends React.Component {
 
@@ -19,6 +19,7 @@ class App extends React.Component {
     return (
       <div className="container">
         <Nav isAuthenticated = { this.isAuthenticated} user={ this.user }/>
+        <MessagesList/>
         {this.props.children}
       </div>
     )

@@ -30,6 +30,7 @@
     "axios": "^0.16.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
+    "classnames": "^2.2.5",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
@@ -38,7 +39,10 @@
     "mongoose-unique-validator": "^1.0.5",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
+    "react-redux": "^5.0.5",
     "react-router": "^2.5.0",
+    "redux": "^3.7.1",
+    "redux-thunk": "^2.2.0",
     "validator": "^7.2.0"
   }
 }
