@@ -4,13 +4,16 @@ import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AddTodo from './AddTodo'
 import Todos from './Todos'
-
-const RETURN_KEY_CODE = 13;
-
+import { addTodo, loadTodos } from '../../actions/todosActions'
+import { connect } from 'react-redux'
 
 class TodosPage extends React.Component{
     constructor(){
         super()
+    }
+
+    componentWillMount(){
+      this.props.loadTodos('/api/todos')
     }
 
     render(){
@@ -18,16 +21,35 @@ class TodosPage extends React.Component{
             <MuiThemeProvider>
                 <div className= "row" >
                     <div className="col-sm-4">
-                      <AddTodo />
+                      <AddTodo addTodo = {this.props.addTodo} />
                     </div>
                     <div className="col-sm-8">
                       <Todos />
                     </div>
-
                 </div>
             </MuiThemeProvider>
         )
     }
 }
 
-export default TodosPage
+const mapStateToProps = (state) => {
+    return {
+      todos: state.todos,
+      hasErrored: state.error,
+      isLoading: state.itemsIsLoading,
+      addTodo: addTodo
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      loadTodos: (url) => dispatch(loadTodos(url))
+    }
+}
+
+TodosPage.PropTypes = {
+  addTodo: React.PropTypes.func.isRequired,
+  dispatch: React.PropTypes.func.isRequired
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodosPage)

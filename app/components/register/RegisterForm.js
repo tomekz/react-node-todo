@@ -74,6 +74,10 @@ export class RegisterForm extends React.Component {
         this.setState({isLoading: false})
       },
       (error) => {
+        this.props.addMessage({
+          type: 'error',
+          text: `Registration failed`
+        })
         this.setState({errors: error.response.data, isLoading: false})
       }
     )

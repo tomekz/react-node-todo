@@ -1,16 +1,23 @@
 import React from 'react'
 import LoginForm from './LoginForm'
+import { connect } from 'react-redux'
+import { addMessage } from '../../actions/messagesActions'
+
 
 class LoginPage extends React.Component{
   render(){
      return(
        <div className="row">
         <div className="col-md-4 col-md-offset-4">
-          <LoginForm/>
+          <LoginForm addMessage = {this.props.addMessage}/>
         </div>
        </div>
      )
   }
 }
 
-export default LoginPage
+LoginPage.PropTypes = {
+  addMessage: React.PropTypes.func.isRequired
+}
+
+export default connect(null, {addMessage})(LoginPage)

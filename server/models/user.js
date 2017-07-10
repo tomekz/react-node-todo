@@ -12,7 +12,8 @@ let userSchema = mongoose.Schema({
     required: true
   },
   todos: [{
-    type: String
+    text: String,
+    id: String
   }]
 })
 

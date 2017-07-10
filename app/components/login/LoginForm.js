@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 import setAuthToken from '../../helpers/setAuthToken'
 import jwt from 'jsonwebtoken'
 import AuthStore from '../.././stores/AuthStore'
+import { addMessage } from '../../actions/messagesActions'
 
 class LoginForm extends React.Component{
   constructor(props){
@@ -58,16 +59,25 @@ class LoginForm extends React.Component{
     e.preventDefault()
     axios.post('/api/auth ', {user: this.state}).then(
       (res) => {
+        this.props.addMessage({
+          type: 'success',
+          text: `Welcome ${this.state.email} !`
+        })
         const token = res.data.token
         localStorage.setItem('jwtToken', token)
         setAuthToken(token)
         AuthStore.setCurrentUser(token)
         browserHistory.push('/todos')
       },
-      (error) =>   this.setState({errors: error.response.data.errors, isLoading: false})
+      (error) => {
+        this.setState({errors: error.response.data.errors, isLoading: false})
+      }
     )
   }
+}
 
+LoginForm.PropTypes = {
+  addMessage: React.PropTypes.func.isRequired
 }
 
 export default LoginForm

@@ -1,33 +1,17 @@
 import React from 'react';
-import TodosStore from '../.././stores/TodosStore'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
 import ChevronRightIcon from 'material-ui/svg-icons/navigation/chevron-right';
+import { connect } from 'react-redux'
 
 class Todos extends React.Component {
   constructor(){
-        super()
-        this.state = {
-            todos: []
-        }
-
-    }
-
-    componentWillMount(){
-      TodosStore.getAllFromDb().then((res) => {
-        const todos = res.data.todos
-        this.setState({todos: todos})
-        TodosStore.set(todos)
-      })
-
-      TodosStore.on('change', () =>{
-        this.setState({todos: TodosStore.getAll()})
-      })
+      super()
     }
 
    render(){
-        const todos = this.state.todos.map(
-          (todo) => <ListItem leftIcon={<ChevronRightIcon/>}> {todo} </ListItem>
+        const todos = this.props.todos.map(
+          (todo) => <ListItem leftIcon={<ChevronRightIcon/>} key={todo.id} primaryText={todo.text} />
         )
 
         return(
@@ -40,4 +24,14 @@ class Todos extends React.Component {
     }
 }
 
-export default Todos;
+Todos.propTypes = {
+  todos: React.PropTypes.array.isRequired
+}
+
+function mapStateToProps(state) {
+  return {
+    todos: state.todos
+  }
+}
+
+export default connect(mapStateToProps)(Todos)
