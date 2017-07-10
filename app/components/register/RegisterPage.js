@@ -2,7 +2,6 @@ import React from 'react';
 import RegisterForm from './RegisterForm'
 import { connect } from 'react-redux'
 import { addMessage } from '../../actions/messagesActions'
-import { registerRequest } from '../../actions/registerActions'
 
 class RegisterPage extends React.Component {
   render() {
@@ -10,7 +9,7 @@ class RegisterPage extends React.Component {
     return (
       <div className="row">
         <div className="col-md-4 col-md-offset-4">
-            <RegisterForm registerRequest = { registerRequest } addMessage = { addMessage }/>
+            <RegisterForm addMessage = { addMessage }/>
         </div>
       </div>
     );
@@ -19,8 +18,7 @@ class RegisterPage extends React.Component {
 
 
 RegisterPage.propTypes = {
-  registerRequest : React.PropTypes.func.isRequired,
   addMessage : React.PropTypes.func.isRequired
 }
 
-export default connect(null, { registerRequest, addMessage })(RegisterPage)
+export default connect(null, { addMessage })(RegisterPage)

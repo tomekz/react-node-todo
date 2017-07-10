@@ -4,8 +4,9 @@ import axios from 'axios'
 import { browserHistory } from 'react-router'
 import setAuthToken from '../../helpers/setAuthToken'
 import jwt from 'jsonwebtoken'
-import AuthStore from '../.././stores/AuthStore'
 import { addMessage } from '../../actions/messagesActions'
+import { setCurrentUser } from '../../actions/authActions'
+import { connect } from 'react-redux'
 
 class LoginForm extends React.Component{
   constructor(props){
@@ -66,7 +67,7 @@ class LoginForm extends React.Component{
         const token = res.data.token
         localStorage.setItem('jwtToken', token)
         setAuthToken(token)
-        AuthStore.setCurrentUser(token)
+        this.props.setCurrentUser({ username: this.state.email })
         browserHistory.push('/todos')
       },
       (error) => {
@@ -77,7 +78,8 @@ class LoginForm extends React.Component{
 }
 
 LoginForm.PropTypes = {
-  addMessage: React.PropTypes.func.isRequired
+  addMessage: React.PropTypes.func.isRequired,
+  setCurrentUser: React.PropTypes.func.isRequired
 }
 
-export default LoginForm
+export default connect(null, {setCurrentUser})(LoginForm)

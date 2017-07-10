@@ -1,18 +1,11 @@
 import React from 'react'
 import Nav from './Nav'
-import AuthStore from '.././stores/AuthStore'
 import MessagesList from './messages/MessagesList'
 
 class App extends React.Component {
 
   constructor(){
     super()
-  }
-
-  componentDidMount(){
-    if(localStorage.jwtToken){
-      AuthStore.setCurrentUser(localStorage.jwtToken)
-    }
   }
 
   render() {

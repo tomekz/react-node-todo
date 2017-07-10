@@ -28,7 +28,7 @@ Todos.propTypes = {
   todos: React.PropTypes.array.isRequired
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     todos: state.todos
   }

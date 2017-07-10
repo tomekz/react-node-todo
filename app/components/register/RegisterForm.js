@@ -1,6 +1,6 @@
 import React from 'react'
+import axios from 'axios'
 import FormTextField from '../common/FormTextField'
-import { browserHistory } from 'react-router'
 
 export class RegisterForm extends React.Component {
   constructor(props){
@@ -65,7 +65,7 @@ export class RegisterForm extends React.Component {
   onSubmit(e){
     this.setState({ errors: {} , isLoading: true})
     e.preventDefault()
-    this.props.registerRequest(this.state).then(
+     axios.post('/api/users', {user: this.state}).then(
       (data) => {
         this.props.addMessage({
           type: 'success',
@@ -84,11 +84,8 @@ export class RegisterForm extends React.Component {
   }
 }
 
-
 RegisterForm.propTypes = {
-  registerRequest : React.PropTypes.func.isRequired,
   addMessage : React.PropTypes.func.isRequired
 }
-
 
 export default RegisterForm

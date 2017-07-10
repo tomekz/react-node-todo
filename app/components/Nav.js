@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router'
-import AuthStore from '../stores/AuthStore'
 import setAuthToken from '.././helpers/setAuthToken'
 import { browserHistory } from 'react-router'
+import { setCurrentUser } from '../actions/authActions'
+import { connect } from 'react-redux'
 
 class Nav extends React.Component {
 
@@ -13,22 +14,14 @@ class Nav extends React.Component {
     }
   }
 
-  componentWillMount(){
-      AuthStore.on('change', () =>{
-          this.setState({ currentUser : AuthStore.getCurrentUser() })
-      })
-  }
-
   logout(e){
     e.preventDefault()
     localStorage.removeItem('jwtToken')
     setAuthToken(false)
-    AuthStore.setCurrentUser(null)
+    this.props.setCurrentUser({})
     browserHistory.push('/')
   }
   render() {
-    const { isAuthenticated } = this.state.currentUser
-
     const userLinks = (
       <ul className="nav navbar-nav navbar-right">
         <li><Link to="/todos">Todos</Link></li>
@@ -50,7 +43,7 @@ class Nav extends React.Component {
             <Link to="/" className="navbar-brand">Home</Link>
           </div>
           <div className="collapse navbar-collapse">
-            { isAuthenticated ? userLinks : guestLinks }
+            { this.props.isAuthenticated ? userLinks : guestLinks }
           </div>
         </div>
       </nav>
@@ -58,4 +51,18 @@ class Nav extends React.Component {
   }
 }
 
-export default Nav
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated
+  }
+}
+
+Nav.PropTypes = {
+  setCurrentUser: React.PropTypes.func.isRequired,
+  user: React.PropTypes.object.isRequired,
+  isAuthenticated: React.PropTypes.bool.isRequired
+}
+
+export default connect(mapStateToProps, {setCurrentUser})(Nav)
+
