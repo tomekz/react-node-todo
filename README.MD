@@ -1,5 +1,14 @@
 # React / Node Todo
 
+ Sample TODO web application with examples for
+
+* Register user
+* Login / Logout with the use of stateless authentication (encrypted JSON Web Token)
+* Create and view todos
+* API in Express and MongoDB to store user accounts and TODO data
+* Redux to manage client state
+
+
 ## Installation
 
 ```bash
